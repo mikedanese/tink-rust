@@ -55,6 +55,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         "rsa_ssa_pkcs1.proto",
         "rsa_ssa_pss.proto",
         "tink.proto",
+        "x_aes_gcm.proto",
         "xchacha20_poly1305.proto",
     ];
     let proto_path = Path::new("proto").to_path_buf();

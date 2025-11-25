@@ -40,6 +40,8 @@ mod kms_envelope_aead;
 pub use kms_envelope_aead::*;
 mod kms_envelope_aead_key_manager;
 pub use kms_envelope_aead_key_manager::*;
+mod x_aes_gcm_key_manager;
+pub use x_aes_gcm_key_manager::*;
 mod xchacha20poly1305_key_manager;
 pub use xchacha20poly1305_key_manager::*;
 
@@ -62,6 +64,8 @@ pub fn init() {
         register_key_manager(std::sync::Arc::new(AesGcmSivKeyManager::default()))
             .expect("tink_aead::init() failed"); // safe: init
         register_key_manager(std::sync::Arc::new(ChaCha20Poly1305KeyManager::default()))
+            .expect("tink_aead::init() failed"); // safe: init
+        register_key_manager(std::sync::Arc::new(XAesGcmKeyManager::default()))
             .expect("tink_aead::init() failed"); // safe: init
         register_key_manager(std::sync::Arc::new(XChaCha20Poly1305KeyManager::default()))
             .expect("tink_aead::init() failed"); // safe: init
@@ -97,6 +101,22 @@ pub fn init() {
         tink_core::registry::register_template_generator(
             "CHACHA20_POLY1305",
             cha_cha20_poly1305_key_template,
+        );
+        tink_core::registry::register_template_generator(
+            "X_AES256_GCM_192_BIT_NONCE",
+            x_aes256_gcm_192_bit_nonce_key_template,
+        );
+        tink_core::registry::register_template_generator(
+            "X_AES256_GCM_192_BIT_NONCE_NO_PREFIX",
+            x_aes256_gcm_192_bit_nonce_no_prefix_key_template,
+        );
+        tink_core::registry::register_template_generator(
+            "X_AES256_GCM_160_BIT_NONCE",
+            x_aes256_gcm_160_bit_nonce_key_template,
+        );
+        tink_core::registry::register_template_generator(
+            "X_AES256_GCM_160_BIT_NONCE_NO_PREFIX",
+            x_aes256_gcm_160_bit_nonce_no_prefix_key_template,
         );
         tink_core::registry::register_template_generator(
             "XCHACHA20_POLY1305",

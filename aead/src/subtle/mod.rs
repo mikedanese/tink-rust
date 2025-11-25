@@ -30,5 +30,7 @@ mod encrypt_then_authenticate;
 pub use encrypt_then_authenticate::*;
 mod ind_cpa;
 pub use ind_cpa::*;
+mod x_aes_gcm;
+pub use self::x_aes_gcm::*;
 mod xchacha20poly1305;
 pub use self::xchacha20poly1305::*;

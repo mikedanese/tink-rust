@@ -1193,6 +1193,29 @@ pub struct RsaSsaPssKeyFormat {
     pub public_exponent: ::prost::alloc::vec::Vec<u8>,
 }
 #[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct XAesGcmParams {
+    /// Must be at least 8 bytes and at most 12 bytes.
+    #[prost(uint32, tag = "1")]
+    pub salt_size: u32,
+}
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
+pub struct XAesGcmKeyFormat {
+    #[prost(uint32, tag = "1")]
+    pub version: u32,
+    #[prost(message, optional, tag = "3")]
+    pub params: ::core::option::Option<XAesGcmParams>,
+}
+/// key_type: type.googleapis.com/google.crypto.tink.XAesGcmKey
+#[derive(Clone, PartialEq, ::prost::Message)]
+pub struct XAesGcmKey {
+    #[prost(uint32, tag = "1")]
+    pub version: u32,
+    #[prost(message, optional, tag = "2")]
+    pub params: ::core::option::Option<XAesGcmParams>,
+    #[prost(bytes = "vec", tag = "3")]
+    pub key_value: ::prost::alloc::vec::Vec<u8>,
+}
+#[derive(Clone, Copy, PartialEq, ::prost::Message)]
 pub struct XChaCha20Poly1305KeyFormat {
     #[prost(uint32, tag = "1")]
     pub version: u32,

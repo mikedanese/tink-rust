@@ -40,6 +40,14 @@ fn test_key_templates() {
             "XCHACHA20_POLY1305",
             tink_aead::x_cha_cha20_poly1305_key_template(),
         ),
+        (
+            "X_AES256_GCM_192_BIT_NONCE",
+            tink_aead::x_aes256_gcm_192_bit_nonce_key_template(),
+        ),
+        (
+            "X_AES256_GCM_160_BIT_NONCE",
+            tink_aead::x_aes256_gcm_160_bit_nonce_key_template(),
+        ),
     ];
     for (name, template) in test_cases {
         let want = tink_tests::key_template_proto("aead", name).unwrap();
@@ -62,6 +70,14 @@ fn test_no_prefix_key_templates() {
         (
             "AES256_GCM_SIV",
             tink_aead::aes256_gcm_siv_no_prefix_key_template(),
+        ),
+        (
+            "X_AES256_GCM_192_BIT_NONCE_NO_PREFIX",
+            tink_aead::x_aes256_gcm_192_bit_nonce_no_prefix_key_template(),
+        ),
+        (
+            "X_AES256_GCM_160_BIT_NONCE_NO_PREFIX",
+            tink_aead::x_aes256_gcm_160_bit_nonce_no_prefix_key_template(),
         ),
     ];
     for (name, template) in test_cases {

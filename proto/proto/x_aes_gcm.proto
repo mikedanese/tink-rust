@@ -1,4 +1,4 @@
-// Copyright 2020 The Tink-Rust Authors
+// Copyright 2024 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,16 +14,28 @@
 //
 ////////////////////////////////////////////////////////////////////////////////
 
-mod aead_factory_test;
-mod aead_key_templates_test;
-mod aes_ctr_hmac_aead_key_manager_test;
-mod aes_gcm_key_manager_test;
-mod aes_gcm_siv_key_manager_test;
-mod chacha20poly1305_key_manager_test;
-mod integration_test;
-mod kms_envelope_aead_test;
-mod kms_envelope_key_manager_test;
-mod x_aes_gcm_key_manager_test;
-mod xchacha20poly1305_key_manager_test;
+syntax = "proto3";
 
-mod subtle;
+package google.crypto.tink;
+
+option java_package = "com.google.crypto.tink.proto";
+option java_multiple_files = true;
+option go_package = "github.com/tink-crypto/tink-go/v2/proto/x_aes_gcm_go_proto";
+
+message XAesGcmParams {
+  // Must be at least 8 bytes and at most 12 bytes.
+  uint32 salt_size = 1;
+}
+
+message XAesGcmKeyFormat {
+  uint32 version = 1;
+  reserved 2;
+  XAesGcmParams params = 3;
+}
+
+// key_type: type.googleapis.com/google.crypto.tink.XAesGcmKey
+message XAesGcmKey {
+  uint32 version = 1;
+  XAesGcmParams params = 2;
+  bytes key_value = 3;
+}

@@ -48,4 +48,7 @@ fn test_aead_init() {
 
     // Check for XChaCha20Poly1305 key manager.
     tink_core::registry::get_key_manager(tink_tests::X_CHA_CHA20_POLY1305_TYPE_URL).unwrap();
+
+    // Check for X-AES-GCM key manager.
+    tink_core::registry::get_key_manager(tink_tests::X_AES_GCM_TYPE_URL).unwrap();
 }

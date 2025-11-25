@@ -5,7 +5,7 @@
 
 This crate holds Rust structures auto-generated (using [prost](https://docs.rs/prost)) from the protocol
 buffer message definitions in the `proto/` subdirectory.  These `.proto` files are copies from
-the upstream [Tink project](https://github.com/google/tink/tree/master/proto).
+the upstream [Tink project](https://github.com/tink-crypto/tink-cc/tree/main/proto).
 
 The version of `prost` used by the library is re-exported as `tink_proto::prost`, to allow library users to get a
 precise version match.

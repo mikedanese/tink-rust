@@ -101,6 +101,60 @@ pub fn cha_cha20_poly1305_key_template() -> KeyTemplate {
     }
 }
 
+/// Return a [`KeyTemplate`] that generates an X-AES-GCM key with the following parameters:
+///   - Key size: 32 bytes (256 bits)
+///   - Nonce size: 24 bytes (192 bits) - composed of 12 bytes of salt and 12 bytes of AES-GCM IV
+///   - Salt size: 12 bytes
+///   - Tag size: 16 bytes
+///   - Output prefix type: TINK
+///
+/// This follows the algorithm defined in the XAES-256-GCM specification:
+/// https://github.com/C2SP/C2SP/blob/main/XAES-256-GCM.md
+pub fn x_aes256_gcm_192_bit_nonce_key_template() -> KeyTemplate {
+    create_x_aes_gcm_key_template(12, OutputPrefixType::Tink)
+}
+
+/// Return a [`KeyTemplate`] that generates an X-AES-GCM key with the following parameters:
+///   - Key size: 32 bytes (256 bits)
+///   - Nonce size: 24 bytes (192 bits) - composed of 12 bytes of salt and 12 bytes of AES-GCM IV
+///   - Salt size: 12 bytes
+///   - Tag size: 16 bytes
+///   - Output prefix type: RAW
+///
+/// This follows the algorithm defined in the XAES-256-GCM specification:
+/// https://github.com/C2SP/C2SP/blob/main/XAES-256-GCM.md
+pub fn x_aes256_gcm_192_bit_nonce_no_prefix_key_template() -> KeyTemplate {
+    create_x_aes_gcm_key_template(12, OutputPrefixType::Raw)
+}
+
+/// Return a [`KeyTemplate`] that generates an X-AES-GCM key with the following parameters:
+///   - Key size: 32 bytes (256 bits)
+///   - Nonce size: 20 bytes (160 bits) - composed of 8 bytes of salt and 12 bytes of AES-GCM IV
+///   - Salt size: 8 bytes
+///   - Tag size: 16 bytes
+///   - Output prefix type: TINK
+///
+/// This follows the algorithm defined in the XAES-256-GCM specification:
+/// https://github.com/C2SP/C2SP/blob/main/XAES-256-GCM.md
+/// Note: The nonce size is 160 bits instead of 192 bits. The remaining 4 bytes are padded with zeros.
+pub fn x_aes256_gcm_160_bit_nonce_key_template() -> KeyTemplate {
+    create_x_aes_gcm_key_template(8, OutputPrefixType::Tink)
+}
+
+/// Return a [`KeyTemplate`] that generates an X-AES-GCM key with the following parameters:
+///   - Key size: 32 bytes (256 bits)
+///   - Nonce size: 20 bytes (160 bits) - composed of 8 bytes of salt and 12 bytes of AES-GCM IV
+///   - Salt size: 8 bytes
+///   - Tag size: 16 bytes
+///   - Output prefix type: RAW
+///
+/// This follows the algorithm defined in the XAES-256-GCM specification:
+/// https://github.com/C2SP/C2SP/blob/main/XAES-256-GCM.md
+/// Note: The nonce size is 160 bits instead of 192 bits. The remaining 4 bytes are padded with zeros.
+pub fn x_aes256_gcm_160_bit_nonce_no_prefix_key_template() -> KeyTemplate {
+    create_x_aes_gcm_key_template(8, OutputPrefixType::Raw)
+}
+
 /// Return a [`KeyTemplate`] that generates a XCHACHA20_POLY1305 key.
 pub fn x_cha_cha20_poly1305_key_template() -> KeyTemplate {
     KeyTemplate {
@@ -192,5 +246,23 @@ fn create_aes_ctr_hmac_aead_key_template(
         value: serialized_format,
         type_url: crate::AES_CTR_HMAC_AEAD_TYPE_URL.to_string(),
         output_prefix_type: OutputPrefixType::Tink as i32,
+    }
+}
+
+/// Return an X-AES-GCM key template with the given salt size.
+fn create_x_aes_gcm_key_template(
+    salt_size: u32,
+    output_prefix_type: OutputPrefixType,
+) -> KeyTemplate {
+    let format = tink_proto::XAesGcmKeyFormat {
+        version: crate::X_AES_GCM_KEY_VERSION,
+        params: Some(tink_proto::XAesGcmParams { salt_size }),
+    };
+    let mut serialized_format = Vec::new();
+    format.encode(&mut serialized_format).unwrap(); // safe: proto-encode
+    KeyTemplate {
+        type_url: crate::X_AES_GCM_TYPE_URL.to_string(),
+        value: serialized_format,
+        output_prefix_type: output_prefix_type as i32,
     }
 }

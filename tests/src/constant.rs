@@ -52,6 +52,11 @@ pub const X_CHA_CHA20_POLY1305_KEY_VERSION: u32 = 0;
 pub const X_CHA_CHA20_POLY1305_TYPE_URL: &str =
     "type.googleapis.com/google.crypto.tink.XChaCha20Poly1305Key";
 
+/// Maximal version of X-AES-GCM keys that Tink supports.
+pub const X_AES_GCM_KEY_VERSION: u32 = 0;
+/// Type URL of X-AES-GCM keys.
+pub const X_AES_GCM_TYPE_URL: &str = "type.googleapis.com/google.crypto.tink.XAesGcmKey";
+
 /// Maximal version of keys that this key manager supports.
 pub const ECIES_AEAD_HKDF_PRIVATE_KEY_KEY_VERSION: u32 = 0;
 
